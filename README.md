@@ -235,8 +235,8 @@ src/guard/
 
 1. Clone the repository:
    ```sh
-   https://github.com/eslam-mohamedl/Structure_React_Typescript.git
-   cd Structure_React_Typescript
+   https://github.com/eslam-mohamedl/clean-architecture-1.git
+   cd clean-architecture-1
    ```
 2. Install dependencies:
    ```sh
