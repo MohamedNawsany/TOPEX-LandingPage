@@ -69,11 +69,6 @@ src/
 │  │  │  └─ uselogin.tsx              
 │  │  │  └─ useRegister.tsx                
 │  │  │ 
-│  │  ├─ guards/
-│  │  │  ├─ DoneGuard.tsx   
-│  │  │  ├─ OTPGuard.tsx
-│  │  │  ├─ ResetGuard.tsx
-│  │  │  ├─ useResetFlow.ts
 │  │  │
 │  │  ├─ utils/
 │  │  │  └─ authValidators.ts
