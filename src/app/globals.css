@@ -1,0 +1,172 @@
+@import "tailwindcss";
+@import "../styles/variables.css";
+
+/* -------------------------------------------------- */
+/* Base                                                */
+/* -------------------------------------------------- */
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    color: var(--color-text-primary);
+    background-color: var(--color-bg-alt);
+    scroll-behavior: smooth;
+  }
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  img,
+  svg,
+  video {
+    max-width: 100%;
+    display: block;
+  }
+}
+/* -------------------------------------------------- */
+/* Design System Utilities                             */
+/* -------------------------------------------------- */
+@layer utilities {
+  /* ================= BACKGROUND ================= */
+  .ds-bg-primary {
+    background-color: var(--color-primary);
+  }
+  .ds-bg-primary-200 {
+    background-color: var(--color-primary-200);
+  }
+  .ds-bg-primary-300 {
+    background-color: var(--color-primary-300);
+  }
+  .ds-bg-secondary {
+    background-color: var(--color-secondary);
+  }
+  .ds-bg {
+    background-color: var(--color-bg);
+  }
+  .ds-bg-alt {
+    background-color: var(--color-bg-alt);
+  }
+  .ds-bg-form {
+    background-color: var(--color-form);
+  }
+  /* ================= COLORS ================= */
+  .ds-text-primary {
+    color: var(--color-text-primary);
+  }
+  .ds-text-alt {
+    color: var(--color-text-alt);
+  }
+  .ds-text-secondary {
+    color: var(--color-text-secondary);
+  }
+  .ds-text-disabled {
+    color: var(--color-text-disabled);
+  }
+  .ds-text-white {
+    color: var(--color-text-white);
+  }
+  /* ================= BORDERS ================= */
+  .ds-border-sm {
+    border-width: var(--border-width-sm);
+    border-style: solid;
+    border-color: var(--color-border);
+  }
+  .ds-border-dm {
+    border-width: var(--border-width-md);
+    border-style: solid;
+    border-color: var(--color-border);
+  }
+  /* ================= RADIUS ================= */
+  .ds-rounded-sm {
+    border-radius: var(--radius-sm);
+  }
+  .ds-rounded-md {
+    border-radius: var(--radius-md);
+  }
+  .ds-rounded-lg {
+    border-radius: var(--radius-lg);
+  }
+  .ds-rounded-xl {
+    border-radius: var(--radius-xl);
+  }
+  .ds-rounded-2xl {
+    border-radius: var(--radius-2xl);
+  }
+  .ds-rounded-3xl {
+    border-radius: var(--radius-3xl);
+  }
+  .ds-rounded-4xl {
+    border-radius: var(--radius-4xl);
+  }
+  /* ================= SHADOWS ================= */
+  .ds-shadow-sm {
+    box-shadow: var(--shadow-sm);
+  }
+  .ds-shadow-md {
+    box-shadow: var(--shadow-md);
+  }
+  .ds-shadow-lg {
+    box-shadow: var(--shadow-lg);
+  }
+  /* ================= TYPOGRAPHY ================= */
+  .ds-text-sm {
+    font-size: var(--text-sm);
+  }
+  .ds-text-base {
+    font-size: var(--text-base);
+  }
+  .ds-text-lg {
+    font-size: var(--text-lg);
+  }
+  .ds-text-xl {
+    font-size: var(--text-xl);
+  }
+  .ds-font-bold {
+    font-weight: var(--font-bold);
+  }
+  .ds-font-regular {
+    font-weight: var(--font-regular);
+  }
+  .ds-font-sans {
+    font-family: var(--font-sans);
+  }
+  .ds-font-heading {
+    font-family: var(--font-heading);
+  }
+  /* ================= SPACING ================= */
+  .ds-p-sm {
+    padding: var(--space-xs);
+  }
+  .ds-p-md {
+    padding: var(--space-md);
+  }
+  .ds-p-lg {
+    padding: var(--space-lg);
+  }
+  .ds-p-xl {
+    padding: var(--space-xl);
+  }
+  .ds-px-4xl {
+    padding: 0 var(--space-4xl);
+  }
+  .ds-py-4xl {
+    padding: var(--space-4xl) 0;
+  }
+  /* ================= STATES ================= */
+
+  .ds-hover {
+    transition: opacity var(--motion-fast) var(--ease-out);
+  }
+  .ds-hover:hover {
+    opacity: var(--state-hover-opacity);
+  }
+  .ds-focus {
+    outline: none;
+    box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-color);
+  }
+  .ds-text-disabled {
+    opacity: var(--opacity-disabled);
+    pointer-events: none;
+  }
+}
