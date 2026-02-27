@@ -7,7 +7,7 @@ function Navbar() {
         <h2>logo</h2>
         <div className="flex gap-4">
           <Link href="/">Home</Link>
-          
+          <Link href="/about">About</Link>
           <Link href="/Feature">Features</Link>
         </div>
         <div>
