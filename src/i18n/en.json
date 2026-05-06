@@ -1,0 +1,229 @@
+{
+  "welcome": "Welcome to TopEX ERP",
+  "description": "Leading your company's digital transformation with innovative technology solutions",
+  
+  "common": {
+    "home": "Home",
+    "services": "Services",
+    "product": "Product",
+    "about": "About Us",
+    "contact": "Contact Us",
+    "login": "Login",
+    "signup": "Sign Up",
+    "learnMore": "Learn More",
+    "getStarted": "Get Started"
+  },
+  
+  "navbar": {
+    "home": "Home",
+    "services": "Services",
+    "product": "Product",
+    "about": "About Us",
+    "contact": "Contact Us",
+    "faq": "FAQ",
+    "pricing": "Pricing",
+    "login": "Login",
+    "signup": "Sign Up"
+  },
+  
+  "hero": {
+    "title": "Leading Your Company's Digital Transformation",
+    "subtitle": "Smart technology solutions to manage your business efficiently and quickly",
+    "cta1": "Get Started",
+    "cta2": "Contact Us"
+  },
+  
+  "about": {
+    "title": "About TopEX",
+    "description": "Founded in 2022 in Alexandria, TopEX aims to provide innovative technology solutions",
+    "text": "We develop integrated ERP systems that help companies manage their business efficiently and achieve the desired digital transformation.",
+    "learnMore": "Learn More About Us"
+  },
+  
+  "visionMission": {
+    "vision": "Our Vision",
+    "visionText": "Technology knows no impossible",
+    "mission": "Our Mission",
+    "missionText": "Lead digital transformation and replace traditional systems"
+  },
+  
+  "services": {
+    "title": "Our Services",
+    "subtitle": "We offer a comprehensive range of technology solutions to meet your business needs",
+    "items": {
+      "accounting": "TopEX Integrated Accounting Software",
+      "custom": "Custom Software Development",
+      "consulting": "Technical Consulting",
+      "solutions": "Innovative Solutions",
+      "data": "Data Migration & Processing",
+      "security": "Information Security"
+    }
+  },
+  
+  "product": {
+    "title": "TopEX ERP System",
+    "subtitle": "Integrated enterprise resource management system built with latest technologies",
+    "features": {
+      "cloud": "Cloud / Server based",
+      "multiCompany": "Multi-company support",
+      "multiLang": "Multi-language (Arabic/English)",
+      "excel": "Excel import/export",
+      "reports": "Advanced reports",
+      "attachments": "Attachments support",
+      "external": "External integration",
+      "zakat": "Saudi ZATCA integration (Phase 2)",
+      "tax": "Egyptian tax authority integration"
+    },
+    "techStack": "Built with C# ASP.NET & SQL Server",
+    "description": "Designed following all ERP standards and principles"
+  },
+  
+  "modules": {
+    "title": "System Modules",
+    "subtitle": "Comprehensive system covering all aspects of your business",
+    "items": {
+      "accounts": "General Ledger",
+      "warehouses": "Warehouses",
+      "sales": "Sales",
+      "salaries": "HR & Salaries",
+      "projects": "Projects",
+      "shipping": "Shipping",
+      "manufacturing": "Manufacturing",
+      "purchases": "Purchases",
+      "transport": "Transportation",
+      "production": "Production Projects"
+    }
+  },
+  
+  "features": {
+    "title": "Why Choose TopEX?",
+    "subtitle": "Advantages that make us the best choice for your business",
+    "items": {
+      "speed": "Speed & Efficiency",
+      "speedDesc": "Process massive data in seconds with powerful performance",
+      "accuracy": "Accuracy",
+      "accuracyDesc": "Real-time accurate reports for better decision making",
+      "flexibility": "Flexibility",
+      "flexibilityDesc": "Seamless customization to match your business growth",
+      "integrated": "Integrated System",
+      "integratedDesc": "All-in-one solution for accounts, warehouses, HR, and sales",
+      "support": "Technical Support",
+      "supportDesc": "24/7 after-sales support team",
+      "price": "Competitive Price",
+      "priceDesc": "Enterprise-grade solution at competitive prices"
+    }
+  },
+  
+  "clients": {
+    "title": "Our Clients",
+    "subtitle": "Trusted by clients from various sectors in Egypt and Saudi Arabia",
+    "egypt": "Egypt",
+    "saudi": "Saudi Arabia",
+    "client1": "Al Asasyat National Company",
+    "client2": "Al Mashhour Fleet Shipping Foundation",
+    "client3": "Eastern Road Transport Foundation",
+    "client4": "Baba Khair Food Company",
+    "client5": "Ahmed Mohammed Al Sulaiman Audit Office",
+    "client6": "Sasil Saudi Company",
+    "client7": "Fimco & Sasil Partnership",
+    "client8": "Mashhour Contracting Foundation",
+    "client9": "Sanaco Contracting Company",
+    "client10": "Arab Motors Company",
+    "client11": "Tanmia Real Estate Development Company",
+    "client12": "Modern Transfer Contracting Foundation",
+    "client13": "Optimal Support Logistics Services",
+    "client14": "Arab Trenches Contracting Company",
+    "client15": "IDS, Fimco & Sasil Partnership",
+    "client16": "Fast Click Logistics Services",
+    "client17": "Bazar Riyadh Trading",
+    "client18": "Yabi Markazi Saudi Arabia",
+    "client19": "Yabi Markazi Construction Branch",
+    "client20": "Yabi Markazi Regional Office",
+    "client21": "Yabi Markazi & Shibh Al Jazeera Partnership",
+    "client22": "Arab Biscuit & Chocolate Company",
+    "client23": "Smart Bathtub Manufacturing Company",
+    "client24": "International Metal Industries Factory",
+    "client25": "Al Khalifa Doors & Windows Company",
+    "client26": "Red Line Real Estate Development Company"
+  },
+  
+  "testimonials": {
+    "title": "Client Testimonials",
+    "subtitle": "What our clients say about their experience with TopEX",
+    "client1": {
+      "name": "Ahmed Mohammed",
+      "position": "General Manager",
+      "company": "Al Asasyat National Company",
+      "text": "TopEX transformed our business operations completely. Highly recommended!"
+    },
+    "client2": {
+      "name": "Sara Ahmed",
+      "position": "Senior Accountant",
+      "company": "Arab Motors Company",
+      "text": "The system's accuracy and speed made managing accounts and warehouses extremely easy."
+    },
+    "client3": {
+      "name": "Mohammed Ali",
+      "position": "CEO",
+      "company": "Fast Click Logistics",
+      "text": "Best investment we made this year. Excellent technical support and great flexibility."
+    }
+  },
+  
+  "cta": {
+    "title": "Ready to Start Your Digital Transformation?",
+    "subtitle": "Join thousands of companies that have changed the way they work with TopEX",
+    "button": "Contact Us Now"
+  },
+  
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Our team is ready to answer your inquiries 24/7",
+    "phone": "Phone",
+    "email": "Email",
+    "website": "Website",
+    "address": "Address",
+    "addressValue": "Sama Star Towers (A), 1st Floor, Apt 105, Sidi Bishr Qebli, Alexandria, Egypt",
+    "name": "Your Name",
+    "message": "Your Message",
+    "send": "Send Message"
+  },
+  
+  "footer": {
+    "description": "Leading your company's digital transformation with innovative technology solutions",
+    "quickLinks": "Quick Links",
+    "support": "Support",
+    "faq": "FAQ",
+    "technicalSupport": "Technical Support",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "followUs": "Follow Us",
+    "copyright": "© 2025 TopEX ERP. All rights reserved"
+  },
+  
+  "accounting": {
+    "title": "General Ledger",
+    "transactions": "Transactions",
+    "journalEntries": "Journal Entries",
+    "paymentVouchers": "Payment Vouchers",
+    "receiptVouchers": "Receipt Vouchers",
+    "cashTransfer": "Cash Transfer",
+    "creditNotes": "Credit Notes",
+    "debitNotes": "Debit Notes",
+    "chequeSettlement": "Cheque Settlement",
+    "data": "Data",
+    "chartOfAccounts": "Chart of Accounts",
+    "costCenters": "Cost Centers",
+    "banksCash": "Banks & Cash",
+    "currencies": "Currencies",
+    "fiscalYears": "Fiscal Years",
+    "reports": "Reports",
+    "accountStatement": "Account Statement",
+    "incomeStatement": "Income Statement",
+    "balanceSheet": "Balance Sheet",
+    "trialBalance": "Trial Balance",
+    "taxReturn": "Tax Return",
+    "chequesUnderPayment": "Cheques Under Payment",
+    "chequesUnderCollection": "Cheques Under Collection"
+  }
+}

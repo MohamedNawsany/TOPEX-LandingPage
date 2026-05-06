@@ -1,41 +1,59 @@
-import { cn } from "@/lib/cn";
-interface Props {
-  children?: React.ReactNode;
-  size: "sm" | "md" | "lg";
-  center?: boolean;
-  variant?: "primary" | "secondary";
+import React from 'react';
+
+interface TextProps {
+  children: React.ReactNode;
+  variant?: 'body' | 'small' | 'large' | 'caption';
+  color?: 'primary' | 'secondary' | 'muted' | 'white';
   className?: string;
+  align?: 'left' | 'center' | 'right';
+  as?: 'p' | 'span' | 'div';
+  weight?: 'normal' | 'medium' | 'semibold' | 'bold';
 }
+
+const variantStyles: Record<string, React.CSSProperties> = {
+  body:    { fontSize: 'var(--text-base)' },
+  small:   { fontSize: 'var(--text-sm)' },
+  large:   { fontSize: 'var(--text-lg)' },
+  caption: { fontSize: 'var(--text-xs)' },
+};
+
+const colorStyles: Record<string, React.CSSProperties> = {
+  primary:   { color: 'var(--color-text-primary)' },
+  secondary: { color: 'var(--color-text-secondary)' },
+  muted:     { color: 'var(--color-text-muted)' },
+  white:     { color: 'var(--color-text-white)' },
+};
+
+const weightStyles: Record<string, React.CSSProperties> = {
+  normal:   { fontWeight: 'var(--font-regular)' },
+  medium:   { fontWeight: '500' },
+  semibold: { fontWeight: 'var(--font-semibold)' },
+  bold:     { fontWeight: 'var(--font-bold)' },
+};
 
 export default function Text({
   children,
-  size = "md",
-  center = false,
-  variant = "primary",
-  className = "pt-2.5 capitalize font-normal",
-}: Props) {
-  const sizes = {
-    sm: "ds-text-sm",
-    md: "ds-text-base",
-    lg: "ds-text-lg",
-  };
-  const variants = {
-    primary: "ds-text-primary",
-    secondary: "ds-text-secondary",
-  };
-
+  variant = 'body',
+  color = 'secondary',
+  className = '',
+  align = 'left',
+  as: Component = 'p',
+  weight = 'normal',
+}: TextProps) {
   return (
-    <>
-      <p
-        className={cn(
-          sizes[size],
-          variants[variant],
-          center ? "text-center" : "",
-          className,
-        )}
-      >
-        {children}
-      </p>
-    </>
+    <Component
+      className={className}
+      style={{
+        ...variantStyles[variant],
+        ...colorStyles[color],
+        ...weightStyles[weight],
+        fontFamily:  'var(--font-sans)',
+        lineHeight:  'var(--leading-relaxed)',
+        textAlign:   align,
+        margin:      0,
+      }}
+    >
+      {children}
+    </Component>
   );
 }
