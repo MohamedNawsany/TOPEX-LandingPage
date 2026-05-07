@@ -49,7 +49,7 @@ export default function Features() {
               icon={feature.icon}
               title={items(feature.key)}
               description={items(feature.descriptionKey) || `${feature.key} description`}
-              variant="elevated"
+              
             />
           ))}
         </div>

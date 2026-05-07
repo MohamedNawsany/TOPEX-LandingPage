@@ -6,9 +6,10 @@ interface IconProps {
   size?: number;
   className?: string;
   color?: string;
+  style?: React.CSSProperties;
 }
 
-export default function Icon({ name, size = 24, className = '', color }: IconProps) {
+export default function Icon({ name, size = 24, className = '', color, style }: IconProps) {
   // Map icon names to Lucide icons
   const iconMap: Record<string, any> = {
     'chart': Icons.BarChart3,
@@ -46,8 +47,8 @@ export default function Icon({ name, size = 24, className = '', color }: IconPro
   
   if (!LucideIcon) {
     // Fallback to a default icon
-    return <Icons.HelpCircle size={size} className={className} color={color} />;
+    return <Icons.HelpCircle size={size} className={className} color={color}  style={style}/>;
   }
 
-  return <LucideIcon size={size} className={className} color={color} />;
+  return <LucideIcon size={size} className={className} color={color} style={style} />;
 }

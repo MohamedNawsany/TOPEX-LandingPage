@@ -11,6 +11,7 @@ interface HeadingProps {
   weight?: 'normal' | 'semibold' | 'bold';
   gutter?: boolean;
   id?: string;
+   style?: React.CSSProperties; 
 }
 
 const getFontSize = (level: string, isMobile: boolean = false) => {
@@ -53,6 +54,7 @@ export default function Heading({
   weight,
   gutter = false,
   id,
+  style,
 }: HeadingProps) {
   const Tag = level;
 
@@ -69,6 +71,7 @@ export default function Heading({
         lineHeight: 'var(--leading-tight)',
         marginBottom: gutter ? 'var(--space-md)' : 0,
         marginTop: 0,
+        ...style,
       }}
     >
       {children}

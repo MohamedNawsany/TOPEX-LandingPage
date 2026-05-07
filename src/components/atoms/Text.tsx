@@ -8,6 +8,7 @@ interface TextProps {
   align?: 'left' | 'center' | 'right';
   as?: 'p' | 'span' | 'div';
   weight?: 'normal' | 'medium' | 'semibold' | 'bold';
+  style?: React.CSSProperties;
 }
 
 const variantStyles: Record<string, React.CSSProperties> = {
@@ -39,6 +40,7 @@ export default function Text({
   align = 'left',
   as: Component = 'p',
   weight = 'normal',
+  style, 
 }: TextProps) {
   return (
     <Component
@@ -51,6 +53,7 @@ export default function Text({
         lineHeight:  'var(--leading-relaxed)',
         textAlign:   align,
         margin:      0,
+        ...style,
       }}
     >
       {children}
