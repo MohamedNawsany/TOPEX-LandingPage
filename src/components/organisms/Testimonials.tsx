@@ -44,92 +44,49 @@ export default function Testimonials() {
     >
       <Container>
         {/* Header */}
-        <div
-          style={{
-            textAlign:    'center',
-            marginBottom: 'var(--space-5xl)',
-            display:      'flex',
-            flexDirection:'column',
-            alignItems:   'center',
-            gap:          'var(--space-md)',
-          }}
-        >
+        <div className="testimonials-header">
           <Heading level="h2" align="center">{t('title')}</Heading>
-          <Text variant="small" align="center" style={{ maxWidth: '42rem' }}>
+          <Text variant="small" align="center" className="testimonials-subtitle">
             {t('subtitle')}
           </Text>
         </div>
 
         {/* Cards grid */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: 'var(--space-3xl)',
-            maxWidth: '1200px',
-            margin: '0 auto',
-          }}
-        >
+        <div className="testimonials-grid">
           {testimonials.map((testimonial, index) => (
-            <Card key={index} hover>
-              <div 
-                style={{ 
-                  display: 'flex', 
-                  flexDirection: 'column', 
-                  height: '100%',
-                  minHeight: '300px',
-                }}
-              >
-                {/* Stars - Filled using lucide-react Star with fill */}
-                <div style={{ display: 'flex', gap: 'var(--space-xs)', justifyContent: 'center', marginBottom: 'var(--space-lg)' }}>
+            <Card key={index} hover padding="lg">
+              <div className="testimonial-card-content">
+                {/* Stars */}
+                <div className="stars">
                   {[...Array(5)].map((_, i) => (
                     <Star
                       key={i}
                       size={20}
-                      style={{ 
-                        color: 'var(--color-warning)',
-                        fill: 'var(--color-warning)',
-                      }}
+                      className="star-icon"
                     />
                   ))}
                 </div>
 
                 {/* Quote */}
-                <div style={{ 
-                  flex: '1',
-                  display: 'flex',
-                  alignItems: 'center',
-                }}>
+                <div className="quote">
                   <Text
                     align="center"
-                    style={{
-                      fontStyle: 'italic',
-                      color: 'var(--color-text-secondary)',
-                      margin: 0,
-                      lineHeight: '1.6',
-                    }}
+                    variant="body"
+                    color="secondary"
+                    style={{ fontStyle: 'italic', lineHeight: '1.6' }}
                   >
                     "{testimonial.text}"
                   </Text>
                 </div>
 
                 {/* Author section */}
-                <div style={{ marginTop: 'var(--space-lg)' }}>
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: 'var(--space-xs)',
-                      textAlign: 'center',
-                    }}
-                  >
-                    <Text weight="semibold" align="center" style={{ color: 'var(--color-text-primary)', margin: 0 }}>
-                      {testimonial.name}
-                    </Text>
-                    <Text variant="small" color="muted" align="center" style={{ margin: 0 }}>
-                      {testimonial.position} — {testimonial.company}
-                    </Text>
-                  </div>
+                <div className="author">
+                  <Text weight="semibold" align="center" color="primary">
+                    {testimonial.name}
+                  </Text>
+                  <Text variant="small" color="muted" align="center">
+                    {testimonial.position} — {testimonial.company}
+                  </Text>
                 </div>
               </div>
             </Card>
@@ -137,17 +94,83 @@ export default function Testimonials() {
         </div>
 
         <style jsx>{`
+          .testimonials-header {
+            text-align: center;
+            margin-bottom: var(--space-5xl);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-md);
+          }
+
+          .testimonials-subtitle {
+            max-width: 42rem;
+          }
+
+          .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(300px, 1fr));
+            gap: var(--space-3xl);
+            max-width: 1200px;
+            margin: 0 auto;
+          }
+
+          .testimonial-card-content {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            min-height: 320px;
+          }
+
+          .stars {
+            display: flex;
+            gap: var(--space-xs);
+            justify-content: center;
+            margin-bottom: var(--space-lg);
+            flex-shrink: 0;
+          }
+
+          .star-icon {
+            color: var(--color-warning);
+            fill: var(--color-warning);
+          }
+
+          .quote {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            margin-bottom: var(--space-lg);
+          }
+
+          .author {
+            margin-top: var(--space-lg);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xs);
+            flex-shrink: 0;
+          }
+
+          /* Make all cards equal height */
+          .testimonials-grid > div {
+            height: 100%;
+          }
+
           @media (max-width: 1024px) {
-            div[style*="gridTemplateColumns: 'repeat(3, 1fr)'"] {
-              grid-template-columns: repeat(2, 1fr) !important;
-              gap: var(--space-2xl) !important;
+            .testimonials-grid {
+              grid-template-columns: repeat(2, minmax(280px, 1fr));
+              gap: var(--space-2xl);
             }
           }
           
           @media (max-width: 768px) {
-            div[style*="gridTemplateColumns: 'repeat(3, 1fr)'"] {
-              grid-template-columns: 1fr !important;
-              gap: var(--space-xl) !important;
+            .testimonials-grid {
+              grid-template-columns: 1fr;
+              gap: var(--space-xl);
+              max-width: 500px;
+            }
+            
+            .testimonial-card-content {
+              min-height: auto;
             }
           }
         `}</style>
