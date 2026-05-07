@@ -33,40 +33,17 @@ export default function Product() {
       }}
     >
       <Container>
-
         {/* Header */}
-        <div
-          style={{
-            textAlign:    'center',
-            marginBottom: 'var(--space-5xl)',
-            display:      'flex',
-            flexDirection:'column',
-            alignItems:   'center',
-            gap:          'var(--space-md)',
-          }}
-        >
+        <div className="product-header">
           <Heading level="h2" align="center">{t('title')}</Heading>
-
-          {/* Reduced subtitle font size - changed from 'large' to 'small' */}
-          <Text variant="small" align="center" style={{ maxWidth: '42rem' }}>
+          <Text variant="small" align="center" className="product-subtitle">
             {t('subtitle')}
           </Text>
 
           {/* Tech tags */}
-          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 'var(--space-sm)' }}>
+          <div className="tech-tags">
             {techTags.map(tag => (
-              <span
-                key={tag}
-                style={{
-                  padding:         `var(--space-xs) var(--space-base)`,
-                  backgroundColor: 'var(--color-primary-light)',
-                  borderRadius:    'var(--radius-full)',
-                  fontSize:        'var(--text-xs)', // Reduced from 'var(--text-sm)'
-                  color:           'var(--color-text-primary)',
-                  fontFamily:      'var(--font-sans)',
-                  fontWeight:      'var(--font-semibold)',
-                }}
-              >
+              <span key={tag} className="tech-tag">
                 {tag}
               </span>
             ))}
@@ -74,73 +51,134 @@ export default function Product() {
         </div>
 
         {/* Feature cards - 3 in a row */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)', // Fixed 3 columns
-            gap: 'var(--space-2xl)',
-            maxWidth: '1200px',
-            margin: '0 auto',
-          }}
-        >
+        <div className="features-grid">
           {productFeatures.map((feature, index) => (
-            <Card key={index} hover>
-              <div style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--space-md)' }}>
+            <Card key={index} padding="md" hover={true}>
+              {({ isHovered }) => (
+                <div className="feature-card-content">
+                  {/* Icon box */}
+                  <div
+                    className="feature-icon"
+                    style={{
+                      backgroundColor: isHovered ? 'var(--color-primary)' : 'var(--color-primary-light)',
+                    }}
+                  >
+                    <Icon
+                      name={feature.icon}
+                      size={24}
+                      color={isHovered ? 'var(--color-text-white)' : 'var(--color-primary)'}
+                    />
+                  </div>
 
-                {/* Icon box */}
-                <div
-                  style={{
-                    flexShrink:      0,
-                    width:           '48px',
-                    height:          '48px',
-                    borderRadius:    'var(--radius-md)',
-                    backgroundColor: 'var(--color-primary-light)',
-                    display:         'flex',
-                    alignItems:      'center',
-                    justifyContent:  'center',
-                  }}
-                >
-                  <Icon
-                    name={feature.icon}
-                    size={24}
-                    style={{ color: 'var(--color-primary)' }}
-                  />
+                  {/* Text */}
+                  <div className="feature-text">
+                    <Heading 
+                      level="h5" 
+                    >
+                      {features(feature.key)}
+                    </Heading>
+                    <Text variant="small" color="muted">
+                      {t(`${feature.key}Desc`)}
+                    </Text>
+                  </div>
                 </div>
-
-                {/* Text - Reduced font sizes */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-xs)' }}>
-                  {/* Changed from h4 to h5 for smaller title */}
-                  <Heading level="h5" style={{ margin: 0 }}>
-                    {features(feature.key)}
-                  </Heading>
-                  {/* Changed variant from default to 'small' for smaller description */}
-                  <Text variant="small" color="muted">
-                    {t(`${feature.key}Desc`)}
-                  </Text>
-                </div>
-
-              </div>
+              )}
             </Card>
           ))}
         </div>
 
-        {/* Responsive styles */}
         <style jsx>{`
+          .product-header {
+            text-align: center;
+            margin-bottom: var(--space-5xl);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-md);
+          }
+
+          .product-subtitle {
+            max-width: 42rem;
+          }
+
+          .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: var(--space-sm);
+            margin-top: var(--space-md);
+          }
+
+          .tech-tag {
+            padding: var(--space-xs) var(--space-base);
+            background-color: var(--color-primary-light);
+            border-radius: var(--radius-full);
+            font-size: var(--text-xs);
+            color: var(--color-text-primary);
+            font-family: var(--font-sans);
+            font-weight: var(--font-semibold);
+            transition: all var(--motion-normal) var(--ease-out);
+            cursor: pointer;
+          }
+
+          .tech-tag:hover {
+            background-color: var(--color-primary);
+            color: var(--color-text-white);
+            transform: translateY(-2px);
+          }
+
+          .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-2xl);
+            max-width: 1200px;
+            margin: 0 auto;
+          }
+
+          .feature-card-content {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-md);
+          }
+
+          .feature-icon {
+            flex-shrink: 0;
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--motion-normal) var(--ease-out);
+          }
+
+          .feature-text {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xs);
+            flex: 1;
+          }
+
+          /* Make all cards equal height */
+          .features-grid > div {
+            height: 100%;
+          }
+
           @media (max-width: 1024px) {
-            div[style*="gridTemplateColumns: 'repeat(3, 1fr)'"] {
-              grid-template-columns: repeat(2, 1fr) !important;
-              gap: var(--space-xl) !important;
+            .features-grid {
+              grid-template-columns: repeat(2, 1fr);
+              gap: var(--space-xl);
             }
           }
           
           @media (max-width: 768px) {
-            div[style*="gridTemplateColumns: 'repeat(3, 1fr)'"] {
-              grid-template-columns: 1fr !important;
-              gap: var(--space-lg) !important;
+            .features-grid {
+              grid-template-columns: 1fr;
+              gap: var(--space-lg);
+              max-width: 500px;
             }
           }
         `}</style>
-
       </Container>
     </section>
   );

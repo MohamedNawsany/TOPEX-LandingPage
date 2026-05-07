@@ -1,28 +1,71 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useMemo } from 'react';
 import { useTranslations } from 'next-intl';
 import Container from '../atoms/Container';
 import Heading from '../atoms/Heading';
 import Text from '../atoms/Text';
+import ClientSlider from '../molecules/ClientSlider';
 import { MapPin } from 'lucide-react';
+
+// Logo mapping for specific clients
+const getLogoForClient = (index: number): string => {
+  const logoMap: Record<number, string> = {
+    1: '🏢', 2: '🚚', 3: '🚛', 4: '🍞', 5: '📊', 6: '🛢️',
+    7: '🤝', 8: '🏗️', 9: '🏘️', 10: '🚗', 11: '🏠', 12: '🏗️',
+    13: '📦', 14: '🕳️', 15: '🤝', 16: '⚡', 17: '🛍️', 18: '📍',
+    19: '🏗️', 20: '🏢', 21: '🤝', 22: '🍪', 23: '🛁', 24: '🏭',
+    25: '🚪', 26: '🔴',
+  };
+  return logoMap[index] || '🏢';
+};
 
 export default function Clients() {
   const t = useTranslations('clients');
-
-  const clients = [
-    { name: t('client1') || 'Client 1', logo: '🏢' },
-    { name: t('client2') || 'Client 2', logo: '🏭' },
-    { name: t('client3') || 'Client 3', logo: '🏪' },
-    { name: t('client4') || 'Client 4', logo: '🏦' },
-    { name: t('client5') || 'Client 5', logo: '🏨' },
-    { name: t('client6') || 'Client 6', logo: '🏛️' },
-  ];
 
   const countries = [
     { name: t('egypt'), icon: MapPin, color: 'var(--color-primary)' },
     { name: t('saudi'), icon: MapPin, color: 'var(--color-secondary)' },
   ];
+
+  // Generate clients dynamically based on available translations
+  const clients = useMemo(() => {
+    const clientList = [];
+    
+    for (let i = 1; i <= 26; i++) {
+      try {
+        const name = t(`client${i}`);
+        // Only add if translation exists and is not the key itself
+        if (name && typeof name === 'string' && !name.includes('client') && name !== `client${i}`) {
+          clientList.push({
+            id: i,
+            name: name,
+            logo: getLogoForClient(i),
+          });
+        }
+      } catch (error) {
+        // Skip if translation doesn't exist
+        console.log(`Client ${i} translation not found`);
+      }
+    }
+    
+    // If no clients found, return default clients
+    if (clientList.length === 0) {
+      return [
+        { id: 1, name: 'Sample Client 1', logo: '🏢' },
+        { id: 2, name: 'Sample Client 2', logo: '🏭' },
+        { id: 3, name: 'Sample Client 3', logo: '🏪' },
+        { id: 4, name: 'Sample Client 4', logo: '🏦' },
+        { id: 5, name: 'Sample Client 5', logo: '🏨' },
+        { id: 6, name: 'Sample Client 6', logo: '🏛️' },
+      ];
+    }
+    
+    return clientList;
+  }, [t]);
+
+  // Ensure clients is always an array
+  const safeClients = clients || [];
 
   return (
     <section
@@ -35,49 +78,21 @@ export default function Clients() {
       }}
     >
       <Container>
-
         {/* Header */}
-        <div
-          style={{
-            textAlign:    'center',
-            marginBottom: 'var(--space-5xl)',
-            display:      'flex',
-            flexDirection:'column',
-            alignItems:   'center',
-            gap:          'var(--space-md)',
-          }}
-        >
+        <div className="clients-header">
           <Heading level="h2" align="center">{t('title')}</Heading>
 
-          <Text variant="small" align="center" style={{ maxWidth: '42rem' }}>
+          <Text variant="small" align="center" className="clients-subtitle">
             {t('subtitle')}
           </Text>
 
           {/* Countries with Icons */}
-          <div
-            style={{
-              display:        'flex',
-              justifyContent: 'center',
-              flexWrap:       'wrap',
-              gap:            'var(--space-4xl)',
-              marginTop:      'var(--space-lg)',
-            }}
-          >
+          <div className="countries">
             {countries.map((country, index) => {
               const CountryIcon = country.icon;
               return (
-                <div
-                  key={index}
-                  style={{
-                    display:    'flex',
-                    alignItems: 'center',
-                    gap:        'var(--space-md)',
-                  }}
-                >
-                  <CountryIcon 
-                    size={28} 
-                    style={{ color: country.color }}
-                  />
+                <div key={index} className="country-item">
+                  <CountryIcon size={28} style={{ color: country.color }} />
                   <Text weight="semibold" style={{ fontSize: 'var(--text-lg)' }}>
                     {country.name}
                   </Text>
@@ -87,93 +102,49 @@ export default function Clients() {
           </div>
         </div>
 
-        {/* Client cards grid - centered with space-between */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(6, 1fr)',
-            gap: 'var(--space-3xl)', // Increased space between cards
-            maxWidth: '1400px', // Increased max width for more space
-            margin: '0 auto',
-            justifyContent: 'center',
-          }}
-        >
-          {clients.map((client, index) => (
-            <ClientCard key={index} client={client} />
-          ))}
-        </div>
+        {/* Client Slider - Shows 6 clients at a time */}
+        {safeClients.length > 0 ? (
+          <ClientSlider clients={safeClients} slidesPerView={6} />
+        ) : (
+          <div className="clients-loading">
+            <Text align="center" color="muted">Loading clients...</Text>
+          </div>
+        )}
 
-        {/* Responsive styles */}
         <style jsx>{`
-          @media (max-width: 1200px) {
-            div[style*="gridTemplateColumns: 'repeat(6, 1fr)'"] {
-              gap: var(--space-2xl) !important;
-            }
+          .clients-header {
+            text-align: center;
+            margin-bottom: var(--space-5xl);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-md);
           }
-          
-          @media (max-width: 1024px) {
-            div[style*="gridTemplateColumns: 'repeat(6, 1fr)'"] {
-              grid-template-columns: repeat(3, 1fr) !important;
-              gap: var(--space-2xl) !important;
-            }
-            
-            div[style*="justifyContent: 'center'"] {
-              gap: var(--space-3xl) !important;
-            }
+
+          .clients-subtitle {
+            max-width: 42rem;
           }
-          
-          @media (max-width: 768px) {
-            div[style*="gridTemplateColumns: 'repeat(6, 1fr)'"] {
-              grid-template-columns: repeat(2, 1fr) !important;
-              gap: var(--space-xl) !important;
-            }
-            
-            div[style*="justifyContent: 'center'"] {
-              gap: var(--space-2xl) !important;
-            }
+
+          .countries {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: var(--space-4xl);
+            margin-top: var(--space-lg);
           }
-          
-          @media (max-width: 480px) {
-            div[style*="gridTemplateColumns: 'repeat(6, 1fr)'"] {
-              grid-template-columns: 1fr !important;
-              gap: var(--space-lg) !important;
-            }
+
+          .country-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+          }
+
+          .clients-loading {
+            padding: var(--space-5xl);
+            text-align: center;
           }
         `}</style>
-
       </Container>
     </section>
-  );
-}
-
-/* Client Card Component */
-function ClientCard({ client }: { client: { name: string; logo: string } }) {
-  const [hovered, setHovered] = useState(false);
-
-  return (
-    <div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{
-        backgroundColor: 'var(--color-bg)',
-        borderRadius:    'var(--radius-xl)',
-        padding:         'var(--space-xl)',
-        textAlign:       'center',
-        boxShadow:       hovered ? 'var(--shadow-md)' : 'var(--shadow-sm)',
-        transform:       hovered ? 'translateY(-4px)' : 'translateY(0)',
-        transition:      `all var(--motion-normal) var(--ease-out)`,
-        cursor: 'pointer',
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
-      <div style={{ fontSize: '3rem', marginBottom: 'var(--space-md)' }}>
-        {client.logo}
-      </div>
-      <Text weight="semibold" align="center">{client.name}</Text>
-    </div>
   );
 }

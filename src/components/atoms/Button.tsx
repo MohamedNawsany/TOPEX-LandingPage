@@ -11,45 +11,66 @@ interface ButtonProps {
   disabled?: boolean;
   type?: 'button' | 'submit' | 'reset';
   fullWidth?: boolean;
+  icon?: React.ReactNode;
+  iconPosition?: 'left' | 'right';
 }
 
-const variantStyles: Record<string, React.CSSProperties> = {
+interface VariantConfig {
+  backgroundColor: string;
+  color: string;
+  hoverBackgroundColor?: string;
+  hoverOpacity?: number;
+  border: string;
+}
+
+const variantConfig: Record<string, VariantConfig> = {
   primary: {
     backgroundColor: 'var(--color-primary)',
     color: 'var(--color-text-white)',
+    hoverBackgroundColor: 'var(--color-primary-dark)',
+    border: 'none',
   },
   secondary: {
     backgroundColor: 'var(--color-secondary)',
     color: 'var(--color-text-white)',
+    hoverBackgroundColor: 'var(--color-secondary)',
+    hoverOpacity: 0.9,
+    border: 'none',
   },
   outline: {
     backgroundColor: 'transparent',
     color: 'var(--color-primary)',
+    hoverBackgroundColor: 'var(--color-primary-light)',
     border: 'var(--border-width-md) solid var(--color-primary)',
   },
   ghost: {
     backgroundColor: 'transparent',
     color: 'var(--color-secondary)',
+    hoverBackgroundColor: 'var(--color-secondary-light)',
+    border: 'none',
   },
 };
 
-const sizeStyles: Record<string, React.CSSProperties> = {
+const sizeConfig = {
   sm: {
     padding: 'var(--space-sm) var(--space-md)',
     fontSize: 'var(--text-sm)',
     borderRadius: 'var(--radius-md)',
+    gap: 'var(--space-sm)',
   },
   md: {
     padding: 'var(--space-base) var(--space-xl)',
     fontSize: 'var(--text-base)',
     borderRadius: 'var(--radius-md)',
+    gap: 'var(--space-md)',
   },
   lg: {
     padding: 'var(--space-md) var(--space-3xl)',
-    fontSize: 'var(--text-xl)',
+    fontSize: 'var(--text-lg)',
     borderRadius: 'var(--radius-lg)',
+    gap: 'var(--space-md)',
   },
-};
+} as const;
 
 export default function Button({
   children,
@@ -60,27 +81,49 @@ export default function Button({
   disabled = false,
   type = 'button',
   fullWidth = false,
+  icon,
+  iconPosition = 'left',
 }: ButtonProps) {
-  const [hovered, setHovered] = React.useState(false);
+  const [isHovered, setIsHovered] = React.useState(false);
 
-  const hoverStyles: Record<string, React.CSSProperties> = {
-    primary: {
-      backgroundColor: hovered ? 'var(--color-primary-dark)' : 'var(--color-primary)',
-      boxShadow: hovered ? 'var(--shadow-md)' : 'none',
-    },
-    secondary: {
-      opacity: hovered ? 'var(--state-hover-opacity)' : '1',
-      boxShadow: hovered ? 'var(--shadow-md)' : 'none',
-    },
-    outline: {
-      backgroundColor: hovered ? 'var(--color-warning)' : 'var(--color-bg)',
-      color: hovered ? 'var(--color-bg)' : 'var(--color-text-primary)',
-      boxShadow: hovered ? 'var(--shadow-md)' : 'none',
-    },
-    ghost: {
-      color: hovered ? 'var(--color-primary)' : 'var(--color-secondary)',
-      backgroundColor: hovered ? 'var(--color-primary-light)' : 'transparent',
-    },
+  const getButtonStyles = (): React.CSSProperties => {
+    const variantStyle = variantConfig[variant];
+    const sizeStyle = sizeConfig[size];
+    
+    // Base styles
+    const styles: React.CSSProperties = {
+      padding: sizeStyle.padding,
+      fontSize: sizeStyle.fontSize,
+      borderRadius: sizeStyle.borderRadius,
+      fontFamily: 'var(--font-sans)',
+      fontWeight: 'var(--font-semibold)',
+      transition: `all var(--motion-normal) var(--ease-out)`,
+      cursor: disabled ? 'not-allowed' : 'pointer',
+      opacity: disabled ? 'var(--opacity-disabled)' : 1,
+      outline: 'none',
+      border: variantStyle.border,
+      display: 'inline-flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: sizeStyle.gap,
+      width: fullWidth ? '100%' : 'auto',
+      backgroundColor: variantStyle.backgroundColor,
+      color: variantStyle.color,
+    };
+
+    // Hover styles
+    if (isHovered && !disabled) {
+      if (variantStyle.hoverBackgroundColor) {
+        styles.backgroundColor = variantStyle.hoverBackgroundColor;
+      }
+      if (variantStyle.hoverOpacity) {
+        styles.opacity = variantStyle.hoverOpacity;
+      }
+      styles.boxShadow = 'var(--shadow-sm)';
+      styles.transform = 'translateY(-1px)';
+    }
+
+    return styles;
   };
 
   return (
@@ -88,30 +131,14 @@ export default function Button({
       type={type}
       onClick={onClick}
       disabled={disabled}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      className={`${fullWidth ? 'w-full' : ''} ${className}`}
-      style={{
-        // Base
-        ...variantStyles[variant],
-        ...sizeStyles[size],
-        // Hover overrides
-        ...hoverStyles[variant],
-        // Shared
-        fontFamily: 'var(--font-sans)',
-        fontWeight: 'var(--font-semibold)',
-        transition: `all var(--motion-normal) var(--ease-out)`,
-        cursor: disabled ? 'not-allowed' : 'pointer',
-        opacity: disabled ? 'var(--opacity-disabled)' : undefined,
-        outline: 'none',
-        border: variantStyles[variant].border ?? 'none',
-        display: 'inline-flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: fullWidth ? '100%' : undefined,
-      }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className={className}
+      style={getButtonStyles()}
     >
+      {icon && iconPosition === 'left' && icon}
       {children}
+      {icon && iconPosition === 'right' && icon}
     </button>
   );
 }

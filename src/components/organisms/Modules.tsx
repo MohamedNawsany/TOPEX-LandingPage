@@ -32,57 +32,66 @@ export default function Modules() {
     >
       <Container>
         {/* Header */}
-        <div
-          style={{
-            textAlign:    'center',
-            marginBottom: 'var(--space-5xl)',
-            display:      'flex',
-            flexDirection:'column',
-            alignItems:   'center',
-            gap:          'var(--space-md)',
-          }}
-        >
+        <div className="modules-header">
           <Heading level="h2" align="center">{t('title')}</Heading>
-          <Text variant="small" align="center" style={{ maxWidth: '42rem' }}>
+          <Text variant="small" align="center" className="modules-subtitle">
             {t('subtitle')}
           </Text>
         </div>
 
         {/* Grid - All cards in one row */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: `repeat(${modules.length}, 1fr)`, // Dynamic based on number of modules
-            gap: 'var(--space-3xl)', // Increased space between cards
-            maxWidth: '1400px',
-            margin: '0 auto',
-          }}
-        >
+        <div className="modules-grid">
           {modules.map((module, index) => (
             <ModuleCard key={index} icon={module.icon} title={items(module.key)} />
           ))}
         </div>
 
-        {/* Responsive styles - Stack on smaller screens */}
         <style jsx>{`
+          .modules-header {
+            text-align: center;
+            margin-bottom: var(--space-5xl);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-md);
+          }
+
+          .modules-subtitle {
+            max-width: 42rem;
+          }
+
+          .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: var(--space-2xl);
+            max-width: 1400px;
+            margin: 0 auto;
+          }
+
+          /* Make all cards equal height */
+          .modules-grid > div {
+            height: 100%;
+          }
+
           @media (max-width: 1200px) {
-            div[style*="gridTemplateColumns"] {
-              grid-template-columns: repeat(3, 1fr) !important;
-              gap: var(--space-2xl) !important;
+            .modules-grid {
+              grid-template-columns: repeat(3, 1fr);
+              gap: var(--space-2xl);
             }
           }
           
           @media (max-width: 768px) {
-            div[style*="gridTemplateColumns"] {
-              grid-template-columns: repeat(2, 1fr) !important;
-              gap: var(--space-xl) !important;
+            .modules-grid {
+              grid-template-columns: repeat(2, 1fr);
+              gap: var(--space-xl);
             }
           }
           
           @media (max-width: 480px) {
-            div[style*="gridTemplateColumns"] {
-              grid-template-columns: 1fr !important;
-              gap: var(--space-lg) !important;
+            .modules-grid {
+              grid-template-columns: 1fr;
+              gap: var(--space-lg);
+              max-width: 300px;
             }
           }
         `}</style>

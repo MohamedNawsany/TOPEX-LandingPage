@@ -32,32 +32,15 @@ export default function Services() {
     >
       <Container>
         {/* Header */}
-        <div
-          style={{
-            textAlign:    'center',
-            marginBottom: 'var(--space-5xl)',
-            display:      'flex',
-            flexDirection:'column',
-            alignItems:   'center',
-            gap:          'var(--space-md)',
-          }}
-        >
+        <div className="services-header">
           <Heading level="h2" align="center">{t('title')}</Heading>
-          <Text variant="large" align="center" >
+          <Text variant="large" align="center" className="services-subtitle">
             {t('subtitle')}
           </Text>
         </div>
 
         {/* Grid - 3 cards in a row */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)', // Fixed 3 columns
-            gap: 'var(--space-2xl)',
-            maxWidth: '1200px',
-            margin: '0 auto',
-          }}
-        >
+        <div className="services-grid">
           {services.map((service, index) => (
             <ServiceCard 
               key={index} 
@@ -67,19 +50,45 @@ export default function Services() {
           ))}
         </div>
 
-        {/* Responsive styles */}
         <style jsx>{`
+          .services-header {
+            text-align: center;
+            margin-bottom: var(--space-5xl);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-md);
+          }
+
+          .services-subtitle {
+            max-width: 42rem;
+          }
+
+          .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-2xl);
+            max-width: 1200px;
+            margin: 0 auto;
+          }
+
+          /* Make all cards equal height */
+          .services-grid > div {
+            height: 100%;
+          }
+
           @media (max-width: 1024px) {
-            div[style*="gridTemplateColumns: 'repeat(3, 1fr)'"] {
-              grid-template-columns: repeat(2, 1fr) !important;
-              gap: var(--space-xl) !important;
+            .services-grid {
+              grid-template-columns: repeat(2, 1fr);
+              gap: var(--space-xl);
             }
           }
           
           @media (max-width: 768px) {
-            div[style*="gridTemplateColumns: 'repeat(3, 1fr)'"] {
-              grid-template-columns: 1fr !important;
-              gap: var(--space-lg) !important;
+            .services-grid {
+              grid-template-columns: 1fr;
+              gap: var(--space-lg);
+              max-width: 500px;
             }
           }
         `}</style>

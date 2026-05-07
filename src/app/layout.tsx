@@ -21,8 +21,12 @@ export default async function RootLayout({
   const font = locale === 'ar' ? cairo.className : inter.className;
 
   return (
-    <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
-      <body className={font}>
+    <html 
+      lang={locale} 
+      dir={locale === 'ar' ? 'rtl' : 'ltr'}
+      suppressHydrationWarning
+    >
+      <body className={font} suppressHydrationWarning>
         <Providers messages={messages} locale={locale}>
           {children}
         </Providers>

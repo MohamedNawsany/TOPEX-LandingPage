@@ -12,11 +12,13 @@
     background-color: var(--color-bg-alt);
     scroll-behavior: smooth;
   }
+  
   *,
   *::before,
   *::after {
     box-sizing: border-box;
   }
+  
   img,
   svg,
   video {
@@ -24,9 +26,11 @@
     display: block;
   }
 }
+
 /* -------------------------------------------------- */
 /* Design System Utilities                             */
 /* -------------------------------------------------- */
+
 @layer utilities {
   /* ================= BACKGROUND ================= */
   .ds-bg-primary {
@@ -50,6 +54,10 @@
   .ds-bg-form {
     background-color: var(--color-form);
   }
+  .ds-bg-card {
+    background-color: var(--color-card-bg);
+  }
+  
   /* ================= COLORS ================= */
   .ds-text-primary {
     color: var(--color-text-primary);
@@ -66,17 +74,19 @@
   .ds-text-white {
     color: var(--color-text-white);
   }
+  
   /* ================= BORDERS ================= */
   .ds-border-sm {
     border-width: var(--border-width-sm);
     border-style: solid;
-    border-color: var(--color-border);
+    border-color: var(--border-color);
   }
-  .ds-border-dm {
+  .ds-border-md {
     border-width: var(--border-width-md);
     border-style: solid;
-    border-color: var(--color-border);
+    border-color: var(--border-color);
   }
+  
   /* ================= RADIUS ================= */
   .ds-rounded-sm {
     border-radius: var(--radius-sm);
@@ -99,6 +109,10 @@
   .ds-rounded-4xl {
     border-radius: var(--radius-4xl);
   }
+  .ds-rounded-full {
+    border-radius: var(--radius-full);
+  }
+  
   /* ================= SHADOWS ================= */
   .ds-shadow-sm {
     box-shadow: var(--shadow-sm);
@@ -109,7 +123,14 @@
   .ds-shadow-lg {
     box-shadow: var(--shadow-lg);
   }
+  .ds-shadow-xl {
+    box-shadow: var(--shadow-xl);
+  }
+  
   /* ================= TYPOGRAPHY ================= */
+  .ds-text-xs {
+    font-size: var(--text-xs);
+  }
   .ds-text-sm {
     font-size: var(--text-sm);
   }
@@ -122,11 +143,20 @@
   .ds-text-xl {
     font-size: var(--text-xl);
   }
-  .ds-font-bold {
-    font-weight: var(--font-bold);
+  .ds-text-2xl {
+    font-size: var(--text-2xl);
+  }
+  .ds-text-3xl {
+    font-size: var(--text-3xl);
   }
   .ds-font-regular {
     font-weight: var(--font-regular);
+  }
+  .ds-font-semibold {
+    font-weight: var(--font-semibold);
+  }
+  .ds-font-bold {
+    font-weight: var(--font-bold);
   }
   .ds-font-sans {
     font-family: var(--font-sans);
@@ -134,9 +164,13 @@
   .ds-font-heading {
     font-family: var(--font-heading);
   }
+  
   /* ================= SPACING ================= */
-  .ds-p-sm {
+  .ds-p-xs {
     padding: var(--space-xs);
+  }
+  .ds-p-sm {
+    padding: var(--space-sm);
   }
   .ds-p-md {
     padding: var(--space-md);
@@ -147,27 +181,105 @@
   .ds-p-xl {
     padding: var(--space-xl);
   }
+  .ds-p-2xl {
+    padding: var(--space-2xl);
+  }
+  .ds-p-3xl {
+    padding: var(--space-3xl);
+  }
   .ds-px-4xl {
-    padding: 0 var(--space-4xl);
+    padding-left: var(--space-4xl);
+    padding-right: var(--space-4xl);
   }
   .ds-py-4xl {
-    padding: var(--space-4xl) 0;
+    padding-top: var(--space-4xl);
+    padding-bottom: var(--space-4xl);
   }
+  
   /* ================= STATES ================= */
-
   .ds-hover {
     transition: opacity var(--motion-fast) var(--ease-out);
   }
   .ds-hover:hover {
     opacity: var(--state-hover-opacity);
   }
+  
   .ds-focus {
     outline: none;
     box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-color);
   }
-  .ds-text-disabled {
+  
+  .ds-disabled {
     opacity: var(--opacity-disabled);
     pointer-events: none;
+    cursor: not-allowed;
   }
   
+  /* ================= TRANSITIONS ================= */
+  .ds-transition {
+    transition: all var(--motion-normal) var(--ease-out);
+  }
+  
+  .ds-transition-fast {
+    transition: all var(--motion-fast) var(--ease-out);
+  }
+  
+  /* ================= LAYOUT ================= */
+  .ds-container {
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--space-4xl);
+    padding-right: var(--space-4xl);
+  }
+  
+  @media (max-width: 768px) {
+    .ds-container {
+      padding-left: var(--space-xl);
+      padding-right: var(--space-xl);
+    }
+  }
+}
+
+/* -------------------------------------------------- */
+/* Custom Global Styles                               */
+/* -------------------------------------------------- */
+
+/* Smooth theme transitions */
+* {
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  transition-timing-function: var(--ease-out);
+  transition-duration: var(--motion-normal);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-alt);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary-light);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary);
+}
+
+/* Focus visible outline for accessibility */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Selection color */
+::selection {
+  background-color: var(--color-primary);
+  color: var(--color-text-white);
 }

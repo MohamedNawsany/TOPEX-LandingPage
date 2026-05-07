@@ -15,6 +15,12 @@
   --color-secondary-light: #01BABD1A;
   --color-accent: #01BABD;
 
+  /* Card specific */
+  --color-card-bg: #ffffff;
+  --color-border-light: rgba(16, 48, 119, 0.1);
+  --color-border-muted: rgba(108, 117, 125, 0.2);
+  --color-border: var(--color-primary);
+
   /* UI Backgrounds */
   --color-bg: #F7F9FC;
   --color-bg-alt: #F8F9FA;
@@ -34,14 +40,21 @@
   --color-error: #DC3545;
   --color-info: #0B5ED7;
 
-  /* Dark Mode */
+  /* Dark Mode Variables */
   --color-bg-dark: #0f2f4f;
-  --color-bg-alt-dark: #3b3b3d;
-  --color-form-dark: #222325;
+  --color-bg-alt-dark: #1a3a5f;
+  --color-form-dark: #1a2a3a;
   --color-text-primary-dark: #F8F9FA;
   --color-text-secondary-dark: #b2b3bd;
   --color-text-disabled-dark: #a2a4b0;
+  --color-primary-dark-mode: #1a3a6b; /* Darker blue for dark mode */
+  --color-primary-dark-mode-2: #0a1a3a; /* Even darker for gradient end */
+  --color-secondary-dark-mode: #01BABD;
 
+  /* Light Mode Gradient (lighter) */
+  --gradient-hero-start: #103077;
+  --gradient-hero-end: #1a4099;
+  
   /* Typography */
   --font-sans: "Inter", "Cairo", sans-serif;
   --font-heading: "Poppins", "Cairo", sans-serif;
@@ -75,6 +88,7 @@
   --space-4xl: 36px;
   --space-5xl: 54px;
   --space-6xl: 80px;
+  --space-7xl: 96px;
 
   /* Borders */
   --border-width-sm: 1px;
@@ -93,7 +107,7 @@
   --radius-4xl: 28px;
   --radius-full: 9999px;
 
-  /* Shadows */
+  /* Light Mode Shadows (lighter) */
   --shadow-sm: 0 4px 16px rgba(0, 0, 8, 0.08);
   --shadow-md: 0 8px 16px rgba(0, 0, 8, 0.08);
   --shadow-lg: 0 12px 16px rgba(0, 0, 8, 0.08);
@@ -119,23 +133,55 @@
   --ease-out: ease-out;
   --ease-in-out: ease-in-out;
 
-  /* Gradients */
-  --gradient-hero: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  /* Gradients - Light Mode (lighter gradient) */
+  --gradient-hero: linear-gradient(135deg, var(--gradient-hero-start) 0%, var(--gradient-hero-end) 100%);
   --gradient-cta: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
 
   --btn-fixed-width: 200px;
   --hero-text-max-width: 418px;
 }
 
-/* Dark Variant */
+/* Dark Variant - Darker gradient */
 :root.dark {
+  /* Backgrounds - Darker */
   --color-bg: var(--color-bg-dark);
   --color-bg-alt: var(--color-bg-alt-dark);
   --color-form: var(--color-form-dark);
+  
+  /* Text Colors */
   --color-text-primary: var(--color-text-primary-dark);
   --color-text-secondary: var(--color-text-secondary-dark);
   --color-text-disabled: var(--color-text-disabled-dark);
-  --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 8px 16px rgba(0, 0, 0, 0.3);
-  --shadow-lg: 0 12px 16px rgba(0, 0, 0, 0.3);
+  
+  /* Brand Colors for Dark Mode - Darker */
+  --color-primary: var(--color-primary-dark-mode);
+  --color-primary-light: rgba(26, 58, 107, 0.15);
+  --color-secondary: var(--color-secondary-dark-mode);
+  
+  /* Card Colors */
+  --color-card-bg: var(--color-bg-dark);
+  
+  /* Borders */
+  --color-border-light: rgba(255, 255, 255, 0.15);
+  --color-border-muted: rgba(255, 255, 255, 0.1);
+  --border-color: var(--color-primary-dark-mode);
+  
+  /* Dark Mode Gradient (darker) */
+  --gradient-hero-start: #0a1a3a;
+  --gradient-hero-end: #1a3a6b;
+  
+  /* Shadows - Darker for dark mode */
+  --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 8px 20px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.35);
+  --shadow-xl: 0 16px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* Re-define gradient to use the updated variables */
+:root {
+  --gradient-hero: linear-gradient(135deg, var(--gradient-hero-start) 0%, var(--gradient-hero-end) 100%);
+}
+
+:root.dark {
+  --gradient-hero: linear-gradient(135deg, var(--gradient-hero-start) 0%, var(--gradient-hero-end) 100%);
 }

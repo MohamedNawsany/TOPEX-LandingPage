@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Card from './Card';
 import Icon from '../atoms/Icon';
 import Heading from '../atoms/Heading';
 import Text from '../atoms/Text';
@@ -11,63 +12,49 @@ interface ServiceCardProps {
 }
 
 export default function ServiceCard({ icon, title }: ServiceCardProps) {
-  const [isHovered, setIsHovered] = React.useState(false);
-
   return (
-    <div
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      style={{
-        backgroundColor: isHovered ? 'var(--color-bg)' : 'var(--color-bg)',
-        borderRadius: 'var(--radius-xl)',
-        padding: 'var(--space-3xl)',
-        textAlign: 'center',
-        transition: `all var(--motion-normal) var(--ease-out)`,
-        boxShadow: isHovered ? 'var(--shadow-lg)' : 'var(--shadow-sm)',
-        transform: isHovered ? 'translateY(-4px)' : 'translateY(0)',
-        cursor: 'pointer',
-        border: '1px solid var(--color-primary-light)',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center', // This centers all children horizontally
-      }}
-    >
-      <div
-        style={{
-          width: '64px',
-          height: '64px',
-          margin: '0 auto var(--space-lg) auto',
-          backgroundColor: 'var(--color-primary-light)',
-          borderRadius: 'var(--radius-lg)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          transition: `all var(--motion-normal) var(--ease-out)`,
-          transform: isHovered ? 'scale(1.1)' : 'scale(1)',
-        }}
-      >
-        <Icon name={icon} size={32} color="var(--color-primary)" />
-      </div>
-      
-      {/* Title - centered */}
-      <Heading 
-        level="h5" 
-        color="primary" 
-        align="center"  // Explicitly center the heading
-        style={{ marginBottom: 'var(--space-md)', width: '100%' }}
-      >
-        {title}
-      </Heading>
-      
-      {/* Description - centered */}
-      <Text 
-        variant="caption" 
-        color="muted"
-        align="center"  // Explicitly center the text
-        style={{ width: '100%' }}
-      >
-        {title} description goes here. Add your service description text.
-      </Text>
-    </div>
+    <Card padding="lg" textAlign="center" hover={true}>
+      {({ isHovered }) => (
+        <>
+          <div
+            style={{
+              width: '64px',
+              height: '64px',
+              margin: '0 auto var(--space-lg) auto',
+              backgroundColor: isHovered ? 'var(--color-primary)' : 'var(--color-primary-light)',
+              borderRadius: 'var(--radius-lg)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transition: `all var(--motion-normal) var(--ease-out)`,
+              transform: isHovered ? 'scale(1.1)' : 'scale(1)',
+            }}
+          >
+            <Icon 
+              name={icon} 
+              size={32} 
+              color={isHovered ? 'var(--color-text-white)' : 'var(--color-primary)'} 
+            />
+          </div>
+          
+          <Heading 
+            level="h5" 
+            color="primary" 
+            align="center"
+            gutter
+          >
+            {title}
+          </Heading>
+          
+          <Text 
+            variant="caption" 
+            color="muted"
+            align="center"
+          >
+            {title} description goes here. Add your service description text.
+          </Text>
+        </>
+      )}
+    </Card>
   );
 }

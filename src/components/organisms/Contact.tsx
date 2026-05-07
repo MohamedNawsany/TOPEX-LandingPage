@@ -17,9 +17,8 @@ export default function Contact() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
 
   const contactInfo = [
-    { icon: 'phone',    title: t('phone'),   value: '+20 123 456 789'  },
-    { icon: 'email',    title: t('email'),   value: 'info@topx-erp.com'},
-    { icon: 'globe',    title: t('website'), value: 'www.topx-erp.com' },
+    { icon: 'phone',    title: t('phone'),   value: '+20 120 009 2936'  },
+    { icon: 'email',    title: t('email'),   value: 'eng.osama@topex-solutions.com'},
     { icon: 'location', title: t('address'), value: t('addressValue')  },
   ];
 
@@ -108,6 +107,7 @@ export default function Contact() {
                     width:           '48px',
                     height:          '48px',
                     borderRadius:    'var(--radius-md)',
+                    color:           'var(--color-text-white)',
                     backgroundColor: 'var(--color-primary)',
                     display:         'flex',
                     alignItems:      'center',
