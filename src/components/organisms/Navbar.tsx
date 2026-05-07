@@ -3,132 +3,73 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import Link from 'next/link';
-import { useRouter, usePathname } from 'next/navigation';
 import { ThemeToggle } from '../atoms/ThemeToggle';
 import LanguageSwitcher from '../molecules/LanguageSwitcher';
 import Button from '../atoms/Button';
 import Icon from '../atoms/Icon';
 import Logo from '../atoms/Logo';
 
-function NavItem({ 
-  children, 
-  onClick,
-  isActive = false 
-}: { 
-  children: React.ReactNode; 
-  onClick?: () => void;
-  isActive?: boolean;
-}) {
+function NavItem({ href, children }: { href: string; children: React.ReactNode }) {
   const [hovered, setHovered] = useState(false);
 
   return (
-    <button
-      onClick={onClick}
+    <Link
+      href={href}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        color: isActive ? 'var(--color-secondary)' : (hovered ? 'var(--color-secondary)' : 'var(--color-text-primary)'),
+        color: hovered ? 'var(--color-secondary)' : 'var(--color-text-primary)',
         fontFamily: 'var(--font-sans)',
-        fontWeight: isActive ? 'var(--font-bold)' : 'var(--font-semibold)',
+        fontWeight: 'var(--font-semibold)',
         fontSize: 'var(--text-base)',
         textDecoration: 'none',
         transition: `color var(--motion-normal) var(--ease-out)`,
-        background: 'none',
-        border: 'none',
-        cursor: 'pointer',
-        padding: 0,
       }}
     >
       {children}
-    </button>
+    </Link>
   );
 }
 
 export default function Navbar() {
-  const [isMenuOpen, setIsMenuOpen]   = useState(false);
-  const [scrolled, setScrolled]       = useState(false);
-  const [isMobile, setIsMobile]       = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrolled, setScrolled]     = useState(false);
+  const [isMobile, setIsMobile]     = useState(false);
+  const [mounted, setMounted]       = useState(false);  // ← key fix
 
   const t      = useTranslations('navbar');
   const locale = useLocale();
-  const router = useRouter();
-  const pathname = usePathname();
   const isRTL  = locale === 'ar';
 
   const navLinks = [
-    { key: 'home',     sectionId: '#home' },
-    { key: 'services', sectionId: '#services' },
-    { key: 'product',  sectionId: '#product' },
-    { key: 'about',    sectionId: '#about' },
-    { key: 'contact',  sectionId: '#contact' },
+    { key: 'home',     href: '#home'     },
+    { key: 'services', href: '#services' },
+    { key: 'product',  href: '#product'  },
+    { key: 'about',    href: '#about'    },
+    { key: 'contact',  href: '#contact'  },
   ];
 
-  // Handle scroll to section without hash in URL
-  const scrollToSection = (sectionId: string) => {
-    const element = document.querySelector(sectionId);
-    if (element) {
-      const headerOffset = 80; // Height of navbar
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-      
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-      
-      // Remove hash from URL
-      window.history.pushState(null, '', `/${locale}`);
-    }
-  };
-
-  // Handle navigation click
-  const handleNavigation = (sectionId: string) => {
-    setIsMenuOpen(false);
-    
-    if (pathname !== `/${locale}`) {
-      // Navigate to home page first
-      router.push(`/${locale}`);
-      // Wait for page to load then scroll
-      setTimeout(() => {
-        scrollToSection(sectionId);
-      }, 100);
-    } else {
-      // Already on home page, just scroll
-      scrollToSection(sectionId);
-    }
-  };
-
-  // Track active section on scroll
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 10);
-      
-      // Track active section
-      const sections = navLinks.map(link => link.sectionId);
-      for (const section of sections) {
-        const element = document.querySelector(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          if (rect.top <= 100 && rect.bottom >= 100) {
-            setActiveSection(section.replace('#', ''));
-            break;
-          }
-        }
-      }
-    };
-    
+    setMounted(true);  // ← only runs on client
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [navLinks]);
+  }, []);
 
-  // Handle resize
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 1024);
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  // Before mount, show a layout-safe shell that matches SSR output
+  // Both desktop nav and hamburger are hidden until client takes over
+  const showDesktop = mounted && !isMobile;
+  const showMobile  = mounted && isMobile;
 
   return (
     <nav
@@ -164,34 +105,27 @@ export default function Navbar() {
           }}
         >
           {/* LEFT: Logo */}
-          <div onClick={() => handleNavigation('#home')} style={{ cursor: 'pointer' }}>
-            <Logo variant="dark" size="md" />
-          </div>
+          <Logo variant="dark" size="md" />
 
           {/* CENTER: Nav Links — desktop only */}
-          {!isMobile && (
+          {showDesktop ? (
             <div
               style={{
-                display:         'flex',
-                justifyContent:  'center',
-                gap:             'var(--space-3xl)',
-                direction:       isRTL ? 'rtl' : 'ltr',
+                display:        'flex',
+                justifyContent: 'center',
+                gap:            'var(--space-3xl)',
+                direction:      isRTL ? 'rtl' : 'ltr',
               }}
             >
               {navLinks.map(link => (
-                <NavItem 
-                  key={link.key} 
-                  onClick={() => handleNavigation(link.sectionId)}
-                  isActive={activeSection === link.key}
-                >
+                <NavItem key={link.key} href={link.href}>
                   {t(link.key)}
                 </NavItem>
               ))}
             </div>
+          ) : (
+            <div /> // spacer to preserve grid layout on SSR and mobile
           )}
-
-          {/* Spacer when mobile so hamburger stays right */}
-          {isMobile && <div />}
 
           {/* RIGHT: Actions */}
           <div
@@ -203,26 +137,25 @@ export default function Navbar() {
             }}
           >
             {/* Desktop actions */}
-            {!isMobile && (
+            {showDesktop && (
               <div style={{ display: 'flex', gap: 'var(--space-md)' }}>
                 <LanguageSwitcher />
                 <ThemeToggle />
-                
               </div>
             )}
 
             {/* Hamburger — mobile only */}
-            {isMobile && (
+            {showMobile && (
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 style={{
-                  background:  'none',
-                  border:      'none',
-                  cursor:      'pointer',
-                  color:       'var(--color-text-primary)',
-                  padding:     0,
-                  display:     'flex',
-                  alignItems:  'center',
+                  background: 'none',
+                  border:     'none',
+                  cursor:     'pointer',
+                  color:      'var(--color-text-primary)',
+                  padding:    0,
+                  display:    'flex',
+                  alignItems: 'center',
                 }}
               >
                 <Icon name={isMenuOpen ? 'x' : 'menu'} size={24} />
@@ -231,8 +164,8 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Mobile menu — only renders when open on mobile */}
-        {isMobile && isMenuOpen && (
+        {/* Mobile menu */}
+        {showMobile && isMenuOpen && (
           <div
             style={{
               paddingBlock:  'var(--space-md)',
@@ -243,12 +176,11 @@ export default function Navbar() {
             }}
           >
             {navLinks.map(link => (
-              <NavItem 
-                key={link.key} 
-                onClick={() => handleNavigation(link.sectionId)}
-                isActive={activeSection === link.key}
-              >
-                <span style={{ display: 'block', paddingBlock: 'var(--space-xs)' }}>
+              <NavItem key={link.key} href={link.href}>
+                <span
+                  onClick={() => setIsMenuOpen(false)}
+                  style={{ display: 'block', paddingBlock: 'var(--space-xs)' }}
+                >
                   {t(link.key)}
                 </span>
               </NavItem>
@@ -256,10 +188,10 @@ export default function Navbar() {
 
             <div
               style={{
-                display:    'flex',
-                flexWrap:   'wrap',
-                gap:        'var(--space-md)',
-                marginTop:  'var(--space-md)',
+                display:   'flex',
+                flexWrap:  'wrap',
+                gap:       'var(--space-md)',
+                marginTop: 'var(--space-md)',
               }}
             >
               <LanguageSwitcher />
