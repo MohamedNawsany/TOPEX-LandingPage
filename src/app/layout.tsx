@@ -2,6 +2,13 @@ import { Inter, Cairo } from 'next/font/google';
 import { Providers } from './providers';
 import { getMessages } from 'next-intl/server';
 import './globals.css';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'TopEx',
+  description: 'TopEx Solutions - ERP System for Small Businesses',
+  
+};
 
 const inter = Inter({ subsets: ['latin'] });
 const cairo = Cairo({ subsets: ['arabic'] });
